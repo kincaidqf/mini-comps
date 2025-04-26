@@ -3,7 +3,7 @@ import pandas_datareader.data as web
 import datetime
 
 # Set start and end dates for data
-start = datetime.datetime(2000, 1, 1)  # You can adjust as needed
+start = datetime.datetime(1980, 1, 1)  # You can adjust as needed
 end = datetime.datetime(2024, 1, 1)
 
 # GDP (Quarterly, Seasonally Adjusted Annual Rate)
