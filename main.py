@@ -16,6 +16,9 @@ inflation = web.DataReader('CPIAUCSL', 'fred', start, end)
 # Resample monthly CPI to quarterly CPI (mean of months in quarter)
 inflation_quarterly = inflation.resample('Q').mean()
 
+# After resampling CPI to quarterly
+inflation_quarterly.index = inflation_quarterly.index + pd.Timedelta(days=1)
+
 print(inflation_quarterly.head())
 inflation_quarterly.to_csv('inflation_quarterly_data.csv')
 
