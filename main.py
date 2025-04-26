@@ -23,15 +23,20 @@ inflation_quarterly.index = inflation_quarterly.index + pd.Timedelta(days=1)
 macro_data = pd.merge(gdp, inflation_quarterly, left_index=True, right_index=True)
 macro_data.columns = ['GDP', 'CPI']
 
-print(macro_data.head())
+# Save locally
+gdp.to_csv('gdp_data.csv')
+inflation.to_csv('inflation_data.csv')
+inflation_quarterly.to_csv('inflation_quarterly_data.csv')
 macro_data.to_csv('macro_data.csv')
+
+'''
+For data visualization:
 
 # Display heads
 print(gdp.head())
 print(inflation.head())
 print(inflation_quarterly.head())
+print(macro_data.head())
 
-# Save locally if you want
-gdp.to_csv('gdp_data.csv')
-inflation.to_csv('inflation_data.csv')
-inflation_quarterly.to_csv('inflation_quarterly_data.csv')
+'''
+
