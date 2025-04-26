@@ -13,6 +13,12 @@ gdp = web.DataReader('GDP', 'fred', start, end)
 # Common inflation proxy: CPIAUCSL = Consumer Price Index for All Urban Consumers
 inflation = web.DataReader('CPIAUCSL', 'fred', start, end)
 
+# Resample monthly CPI to quarterly CPI (mean of months in quarter)
+inflation_quarterly = inflation.resample('Q').mean()
+
+print(inflation_quarterly.head())
+inflation_quarterly.to_csv('inflation_quarterly_data.csv')
+
 # Display heads
 print(gdp.head())
 print(inflation.head())
