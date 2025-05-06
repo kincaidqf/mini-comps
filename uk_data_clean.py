@@ -27,13 +27,13 @@ cpi_df['quarterly_rate'] = (1 + cpi_df['CPI'] / 100) ** (1/4) - 1
 cpi_df['CPI_index'] = 100 * (1 + cpi_df['quarterly_rate']).cumprod()
 
 # Calculate QoQ percent change in index
-cpi_df['UK_CPI_pct'] = cpi_df['CPI_index'].pct_change() * 100
+cpi_df['CPI_pct'] = cpi_df['CPI_index'].pct_change() * 100
 
 # Round to 3 decimal places
-cpi_df['UK_CPI_pct'] = cpi_df['UK_CPI_pct'].round(3)
+cpi_df['CPI_pct'] = cpi_df['CPI_pct'].round(3)
 
 # Drop first row (NaN in pct_change)
-cpi_df = cpi_df[['DATE', 'UK_CPI_pct']].dropna()
+cpi_df = cpi_df[['DATE', 'CPI_pct']].dropna()
 
 # === Merge GDP and CPI ===
 uk_df = pd.merge(gdp_df, cpi_df, on='DATE', how='inner')
