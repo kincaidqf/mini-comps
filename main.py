@@ -3,7 +3,7 @@ import pandas_datareader.data as web
 import datetime
 
 # Set start and end dates for data
-start = datetime.datetime(1980, 1, 1)  # You can adjust as needed
+start = datetime.datetime(1989, 1, 1)  # You can adjust as needed
 end = datetime.datetime(2024, 1, 1)
 
 # GDP (Quarterly, Seasonally Adjusted Annual Rate)
@@ -17,26 +17,24 @@ inflation = web.DataReader('CPIAUCSL', 'fred', start, end)
 inflation_quarterly = inflation.resample('Q').mean()
 
 # After resampling CPI to quarterly
-inflation_quarterly.index = inflation_quarterly.index + pd.Timedelta(days=1)
+gdp.index = gdp.index + pd.Timedelta(days=-1)
 
 # Merge on index (date)
 macro_data = pd.merge(gdp, inflation_quarterly, left_index=True, right_index=True)
 macro_data.columns = ['GDP', 'CPI']
 
+macro_data['GDP'] = macro_data['GDP'].pct_change() * 100
+macro_data['CPI'] = macro_data['CPI'].pct_change() * 100
+
+macro_data['GDP'] = macro_data['GDP'].round(3)
+macro_data['CPI'] = macro_data['CPI'].round(3)
+
+macro_data.dropna(subset=['GDP', 'CPI'], inplace=True)
+
 # Save locally
-gdp.to_csv('gdp_data.csv')
-inflation.to_csv('inflation_data.csv')
-inflation_quarterly.to_csv('inflation_quarterly_data.csv')
-macro_data.to_csv('macro_data.csv')
+# gdp.to_csv('gdp_data.csv')
+# inflation.to_csv('inflation_data.csv')
+# inflation_quarterly.to_csv('inflation_quarterly_data.csv')
+macro_data.to_csv('data/us_macro_cleaned.csv')
 
-'''
-For data visualization:
-
-# Display heads
-print(gdp.head())
-print(inflation.head())
-print(inflation_quarterly.head())
-print(macro_data.head())
-
-'''
 
