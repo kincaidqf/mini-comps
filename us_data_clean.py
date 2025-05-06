@@ -21,15 +21,15 @@ gdp.index = gdp.index + pd.Timedelta(days=-1)
 
 # Merge on index (date)
 macro_data = pd.merge(gdp, inflation_quarterly, left_index=True, right_index=True)
-macro_data.columns = ['US_GDP_pct', 'US_CPI_pct']
+macro_data.columns = ['GDP_pct', 'CPI_pct']
 
-macro_data['US_GDP_pct'] = macro_data['US_GDP_pct'].pct_change() * 100
-macro_data['US_CPI_pct'] = macro_data['US_CPI_pct'].pct_change() * 100
+macro_data['GDP_pct'] = macro_data['GDP_pct'].pct_change() * 100
+macro_data['CPI_pct'] = macro_data['CPI_pct'].pct_change() * 100
 
-macro_data['US_GDP_pct'] = macro_data['US_GDP_pct'].round(3)
-macro_data['US_CPI_pct'] = macro_data['US_CPI_pct'].round(3)
+macro_data['GDP_pct'] = macro_data['GDP_pct'].round(3)
+macro_data['CPI_pct'] = macro_data['CPI_pct'].round(3)
 
-macro_data.dropna(subset=['US_GDP_pct', 'US_CPI_pct'], inplace=True)
+macro_data.dropna(subset=['GDP_pct', 'CPI_pct'], inplace=True)
 
 # Save locally
 # gdp.to_csv('gdp_data.csv')

@@ -11,13 +11,13 @@ def parse_quarter_string(qstr):
     return pd.to_datetime(year + quarter_end[q])
 
 
-gdp_df['Date'] = gdp_df['Quarter'].apply(parse_quarter_string)
-cpi_df['Date'] = cpi_df['Quarter'].apply(parse_quarter_string)
+gdp_df['DATE'] = gdp_df['Quarter'].apply(parse_quarter_string)
+cpi_df['DATE'] = cpi_df['Quarter'].apply(parse_quarter_string)
 
 # === Prepare GDP Data ===
 # GDP is already in percent change format
-gdp_df.rename(columns={'GDP': 'UK_GDP_pct'}, inplace=True)
-gdp_df = gdp_df[['Date', 'UK_GDP_pct']]
+gdp_df.rename(columns={'GDP': 'GDP_pct'}, inplace=True)
+gdp_df = gdp_df[['DATE', 'GDP_pct']]
 
 # === Process CPI: convert annual rate to quarterly rate, build index, then compute QoQ % change ===
 # Convert annual inflation rate (e.g., 5.8%) to decimal quarterly rate
@@ -33,10 +33,10 @@ cpi_df['UK_CPI_pct'] = cpi_df['CPI_index'].pct_change() * 100
 cpi_df['UK_CPI_pct'] = cpi_df['UK_CPI_pct'].round(3)
 
 # Drop first row (NaN in pct_change)
-cpi_df = cpi_df[['Date', 'UK_CPI_pct']].dropna()
+cpi_df = cpi_df[['DATE', 'UK_CPI_pct']].dropna()
 
 # === Merge GDP and CPI ===
-uk_df = pd.merge(gdp_df, cpi_df, on='Date', how='inner')
+uk_df = pd.merge(gdp_df, cpi_df, on='DATE', how='inner')
 
 # === Export Cleaned Data ===
 uk_df.to_csv('data/uk_macro_cleaned.csv', index=False)
