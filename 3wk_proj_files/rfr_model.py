@@ -26,8 +26,8 @@ def split_data(df):
 
 
 # Create dataframes from csv files
-base_df = pd.read_csv('data/dataset-base.csv')
-noisy_df = pd.read_csv('data/dataset-noisy.csv')
+base_df = pd.read_csv('3wk_proj_files/data/dataset-base.csv')
+noisy_df = pd.read_csv('3wk_proj_files/data/dataset-noisy.csv')
 
 # Prepare dataframes for model training
 supervised_base_df = create_supervised(base_df, n_lags=8)
